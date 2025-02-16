@@ -68,13 +68,12 @@
             
             $(document).on('click', '.like-btn', function() {
                 let index = $(this).data('index');
-                if (timelinePosts[index].liked) {
-                    timelinePosts[index].likes--;
-                } else {
-                    timelinePosts[index].likes++;
-                }
-                timelinePosts[index].liked = !timelinePosts[index].liked;
-                renderTimeline();
+                const post = timelinePosts[index];
+                post.liked = !post.liked;
+                post.likes += post.liked ? 1 : -1;
+
+                // Actualiza solo el botón de like y el contador
+                $(this).html(`${post.liked ? '❤️' : '🤍'} ${post.likes}`);
             });
             
             renderTimeline();
