@@ -47,33 +47,47 @@
     <script>
         $(document).ready(function() {
             const posts = [
-                { img: 'https://picsum.photos/300/200', likes: 45, caption: 'Un día increíble!' },
-                { img: 'https://picsum.photos/300/201', likes: 78, caption: 'Disfrutando el atardecer' },
-                { img: 'https://picsum.photos/300/202', likes: 32, caption: 'Un café para empezar el día' }
+                { img: 'https://picsum.photos/300/200', likes: 45, caption: 'Un día increíble!', liked: false },
+                { img: 'https://picsum.photos/300/201', likes: 78, caption: 'Disfrutando el atardecer', liked: false },
+                { img: 'https://picsum.photos/300/202', likes: 32, caption: 'Un café para empezar el día', liked: false }
             ];
             
-            let postHtml = '';
-            posts.forEach(post => {
-                postHtml += `
-                    <div class="col-md-4 mb-3">
-                        <div class="card">
-                            <img src="${post.img}" class="card-img-top" alt="Publicación">
-                            <div class="card-body">
-                                <p class="card-text">${post.caption}</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <button class="btn btn-link text-danger"><i class="bi bi-heart"></i></button>
-                                        <button class="btn btn-link text-dark"><i class="bi bi-chat"></i></button>
-                                        <button class="btn btn-link text-dark"><i class="bi bi-share"></i></button>
+            function renderPosts() {
+                let postHtml = '';
+                posts.forEach((post, index) => {
+                    postHtml += `
+                        <div class="col-md-4 mb-3">
+                            <div class="card">
+                                <img src="${post.img}" class="card-img-top" alt="Publicación">
+                                <div class="card-body">
+                                    <p class="card-text">${post.caption}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <button class="btn btn-link text-danger like-btn" data-index="${index}">
+                                                ${post.liked ? '❤️' : '🤍'} ${post.likes}
+                                            </button>
+                                        </div>
                                     </div>
-                                    <small>❤️ ${post.likes}</small>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                `;
+                    `;
+                });
+                $('#post-container').html(postHtml);
+            }
+            
+            $(document).on('click', '.like-btn', function() {
+                let index = $(this).data('index');
+                if (posts[index].liked) {
+                    posts[index].likes--;
+                } else {
+                    posts[index].likes++;
+                }
+                posts[index].liked = !posts[index].liked;
+                renderPosts();
             });
-            $('#post-container').html(postHtml);
+            
+            renderPosts();
         });
     </script>
 </body>
