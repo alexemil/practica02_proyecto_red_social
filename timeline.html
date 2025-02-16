@@ -74,5 +74,15 @@
             renderTimeline();
         });
     </script>
+
+    <script>
+        // Redirigir si no hay usuario logueado
+        $(document).ready(function() {
+            const loggedInUser = localStorage.getItem('loggedInUser');
+            if (!loggedInUser) {
+                window.location.href = 'login.html';
+            }
+        });
+    </script>
 </body>
 </html>
