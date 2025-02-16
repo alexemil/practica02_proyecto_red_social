@@ -15,28 +15,28 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-        <a class="navbar-brand" href="index.html">RedSocial</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="profile.html">Mi Perfil</a> <!-- Botón de perfil -->
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="login.html">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="register.html">Registro</a>
-                </li>
-            </ul>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">RedSocial</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="profile.html">Mi Perfil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="register.html">Registro</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
     <!-- Sección Principal -->
     <header class="bg-primary text-white text-center py-5">
@@ -46,62 +46,10 @@
         </div>
     </header>
 
-    
-
     <!-- Sección de Contenido -->
     <section class="container my-5">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="https://picsum.photos/300/200" class="card-img-top" alt="Imagen ejemplo">
-                    <div class="card-body">
-                        <h5 class="card-title">Usuario1</h5>
-                        <p class="card-text">Esta es una descripción de la imagen.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <button class="btn btn-link text-danger"><i class="bi bi-heart"></i></button>
-                                <button class="btn btn-link text-dark"><i class="bi bi-chat"></i></button>
-                                <button class="btn btn-link text-dark"><i class="bi bi-share"></i></button>
-                            </div>
-                            <small>❤️ 100 Likes</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="https://picsum.photos/300/200" class="card-img-top" alt="Imagen ejemplo">
-                    <div class="card-body">
-                        <h5 class="card-title">Usuario2</h5>
-                        <p class="card-text">Descripción breve.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <button class="btn btn-link text-danger"><i class="bi bi-heart"></i></button>
-                                <button class="btn btn-link text-dark"><i class="bi bi-chat"></i></button>
-                                <button class="btn btn-link text-dark"><i class="bi bi-share"></i></button>
-                            </div>
-                            <small>❤️ 150 Likes</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="https://picsum.photos/300/200" class="card-img-top" alt="Imagen ejemplo">
-                    <div class="card-body">
-                        <h5 class="card-title">Usuario3</h5>
-                        <p class="card-text">Otro momento compartido.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <button class="btn btn-link text-danger"><i class="bi bi-heart"></i></button>
-                                <button class="btn btn-link text-dark"><i class="bi bi-chat"></i></button>
-                                <button class="btn btn-link text-dark"><i class="bi bi-share"></i></button>
-                            </div>
-                            <small>❤️ 200 Likes</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="row" id="post-container">
+            <!-- Publicaciones de ejemplo -->
         </div>
     </section>
 
@@ -109,5 +57,52 @@
     <footer class="bg-light text-center py-3">
         <p>&copy; 2025 RedSocial. Todos los derechos reservados.</p>
     </footer>
+
+    <script>
+        $(document).ready(function() {
+            const posts = [
+                { username: '@usuario1', name: 'Usuario Uno', img: 'https://picsum.photos/300/200', likes: 120, caption: '¡Explorando nuevos lugares!', liked: false },
+                { username: '@usuario2', name: 'Usuario Dos', img: 'https://picsum.photos/300/201', likes: 89, caption: 'Un buen café por la mañana ☕', liked: false },
+                { username: '@usuario3', name: 'Usuario Tres', img: 'https://picsum.photos/300/202', likes: 76, caption: 'Día de entrenamiento 💪', liked: false }
+            ];
+
+            function renderPosts() {
+                let postHtml = '';
+                posts.forEach((post, index) => {
+                    postHtml += `
+                        <div class="col-md-4 mb-3">
+                            <div class="card">
+                                <img src="${post.img}" class="card-img-top" alt="Publicación">
+                                <div class="card-body">
+                                    <h5 class="card-title">${post.name}</h5>
+                                    <p class="card-text">${post.caption}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <button class="btn btn-link text-danger like-btn" data-index="${index}">
+                                                ${post.liked ? '❤️' : '🤍'} ${post.likes}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                $('#post-container').html(postHtml);
+            }
+
+            $(document).on('click', '.like-btn', function() {
+                let index = $(this).data('index');
+                const post = posts[index];
+                post.liked = !post.liked;
+                post.likes += post.liked ? 1 : -1;
+
+                // Actualiza solo el botón de like y el contador
+                $(this).html(`${post.liked ? '❤️' : '🤍'} ${post.likes}`);
+            });
+
+            renderPosts();
+        });
+    </script>
 </body>
 </html>
