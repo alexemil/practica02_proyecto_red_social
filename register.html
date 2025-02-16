@@ -79,43 +79,51 @@
                     $('#otherGender').hide();
                 }
             });
-
+        
             $('#registerForm').submit(function(event) {
-                event.preventDefault(); // Evita que el formulario se envíe automáticamente
-                let username = $('#username').val().trim();
-                let email = $('#email').val().trim();
-                let password = $('#password').val().trim();
-                let confirmPassword = $('#confirmPassword').val().trim();
-                let birthdate = $('#birthdate').val();
-                let gender = $('#gender').val();
-                let today = new Date();
-                let birthDate = new Date(birthdate);
-                let age = today.getFullYear() - birthDate.getFullYear();
-                let monthDiff = today.getMonth() - birthDate.getMonth();
-                if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-                    age--;
-                }
+    event.preventDefault();
+    let username = $('#username').val().trim();
+    let email = $('#email').val().trim();
+    let password = $('#password').val().trim();
+    let confirmPassword = $('#confirmPassword').val().trim();
+    let birthdate = $('#birthdate').val();
+    let gender = $('#gender').val();
 
-                if (!username || !email || !password || !confirmPassword || !birthdate || !gender) {
-                    alert('Por favor, complete todos los campos obligatorios.');
-                    return;
-                }
-                if (!email.includes('@') || !email.includes('.')) {
-                    alert('Ingrese un correo electrónico válido.');
-                    return;
-                }
-                if (password !== confirmPassword) {
-                    alert('Las contraseñas no coinciden.');
-                    return;
-                }
-                if (age < 18) {
-                    alert('Debes tener al menos 18 años para registrarte.');
-                    return;
-                }
-                alert('Registro exitoso. Redirigiendo al login...');
-                window.location.href = 'login.html';
-            });
-        });
+    if (gender === 'Otro') {
+        gender = $('#otherGender').val().trim();
+    }
+
+    // Validaciones
+    if (!username || !email || !password || !confirmPassword || !birthdate || !gender) {
+        alert('Por favor, complete todos los campos obligatorios.');
+        return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        alert('Ingrese un correo electrónico válido.');
+        return;
+    }
+    if (password !== confirmPassword) {
+        alert('Las contraseñas no coinciden.');
+        return;
+    }
+    if (localStorage.getItem(username)) {
+        alert('El nombre de usuario ya está en uso.');
+        return;
+    }
+
+    // Guardar el usuario en localStorage
+    let user = {
+        username: username,
+        email: email,
+        password: password,
+        birthdate: birthdate,
+        gender: gender
+    };
+        localStorage.setItem(username, JSON.stringify(user));
+        alert('Registro exitoso. Redirigiendo al login...');
+        window.location.href = 'login.html';
+    });
+                 });
     </script>
 </body>
 </html>

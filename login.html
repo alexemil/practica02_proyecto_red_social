@@ -47,26 +47,26 @@
 
     <!-- Script de Validación -->
     <script>
-        $(document).ready(function() {
-            $('#loginForm').submit(function(event) {
-                event.preventDefault(); // Evita que el formulario se envíe automáticamente
-                let username = $('#username').val().trim();
-                let password = $('#password').val().trim();
+        $('#loginForm').submit(function(event) {
+    event.preventDefault();
+    let username = $('#username').val().trim();
+    let password = $('#password').val().trim();
 
-                if (username === '' || password === '') {
-                    alert('Por favor, complete todos los campos.');
-                    return;
-                }
+    if (username === '' || password === '') {
+        alert('Por favor, complete todos los campos.');
+        return;
+    }
 
-                // Simulación de login exitoso con usuario demo
-                if (username === 'demo' && password === '1234') {
-                    alert('Login exitoso. Redirigiendo al timeline...');
-                    window.location.href = 'timeline.html';
-                } else {
-                    alert('Usuario o contraseña incorrectos.');
-                }
-            });
-        });
+    // Verificar si el usuario existe en localStorage
+    let user = JSON.parse(localStorage.getItem(username));
+    if (user && user.password === password) {
+        alert('Login exitoso. Redirigiendo al timeline...');
+        localStorage.setItem('loggedInUser', username); // Guarda el usuario logueado
+        window.location.href = 'timeline.html';
+    } else {
+            alert('Usuario o contraseña incorrectos.');
+        }
+    });
     </script>
 </body>
 </html>
