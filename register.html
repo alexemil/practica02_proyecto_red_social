@@ -79,51 +79,13 @@
                     $('#otherGender').hide();
                 }
             });
-        
+
             $('#registerForm').submit(function(event) {
-    event.preventDefault();
-    let username = $('#username').val().trim();
-    let email = $('#email').val().trim();
-    let password = $('#password').val().trim();
-    let confirmPassword = $('#confirmPassword').val().trim();
-    let birthdate = $('#birthdate').val();
-    let gender = $('#gender').val();
-
-    if (gender === 'Otro') {
-        gender = $('#otherGender').val().trim();
-    }
-
-    // Validaciones
-    if (!username || !email || !password || !confirmPassword || !birthdate || !gender) {
-        alert('Por favor, complete todos los campos obligatorios.');
-        return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        alert('Ingrese un correo electrónico válido.');
-        return;
-    }
-    if (password !== confirmPassword) {
-        alert('Las contraseñas no coinciden.');
-        return;
-    }
-    if (localStorage.getItem(username)) {
-        alert('El nombre de usuario ya está en uso.');
-        return;
-    }
-
-    // Guardar el usuario en localStorage
-    let user = {
-        username: username,
-        email: email,
-        password: password,
-        birthdate: birthdate,
-        gender: gender
-    };
-        localStorage.setItem(username, JSON.stringify(user));
-        alert('Registro exitoso. Redirigiendo al login...');
-        window.location.href = 'login.html';
-    });
-                 });
+                event.preventDefault(); // Evita que el formulario se envíe automáticamente
+                // Redirige directamente al login.html sin guardar datos
+                window.location.href = 'login.html';
+            });
+        });
     </script>
 </body>
 </html>

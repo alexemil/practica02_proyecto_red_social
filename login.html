@@ -47,26 +47,13 @@
 
     <!-- Script de Validación -->
     <script>
-        $('#loginForm').submit(function(event) {
-    event.preventDefault();
-    let username = $('#username').val().trim();
-    let password = $('#password').val().trim();
-
-    if (username === '' || password === '') {
-        alert('Por favor, complete todos los campos.');
-        return;
-    }
-
-    // Verificar si el usuario existe en localStorage
-    let user = JSON.parse(localStorage.getItem(username));
-    if (user && user.password === password) {
-        alert('Login exitoso. Redirigiendo al timeline...');
-        localStorage.setItem('loggedInUser', username); // Guarda el usuario logueado
-        window.location.href = 'timeline.html';
-    } else {
-            alert('Usuario o contraseña incorrectos.');
-        }
-    });
+        $(document).ready(function() {
+            $('#loginForm').submit(function(event) {
+                event.preventDefault(); // Evita que el formulario se envíe automáticamente
+                // Redirige directamente al index.html sin validaciones
+                window.location.href = 'index.html';
+            });
+        });
     </script>
 </body>
 </html>
