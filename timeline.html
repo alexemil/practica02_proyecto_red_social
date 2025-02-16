@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timeline - Red Social</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">RedSocial</a>
+            <div class="ms-auto">
+                <a href="profile.html" class="btn btn-primary">Mi Perfil</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Timeline -->
+    <div class="container mt-4">
+        <h4>Publicaciones Recientes</h4>
+        <div class="row" id="timeline-container">
+            <!-- Publicaciones de otros usuarios -->
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            const timelinePosts = [
+                { username: '@usuario1', name: 'Usuario Uno', img: 'https://picsum.photos/300/200', likes: 120, caption: '¡Explorando nuevos lugares!', liked: false },
+                { username: '@usuario2', name: 'Usuario Dos', img: 'https://picsum.photos/300/201', likes: 89, caption: 'Un buen café por la mañana ☕', liked: false },
+                { username: '@usuario3', name: 'Usuario Tres', img: 'https://picsum.photos/300/202', likes: 76, caption: 'Día de entrenamiento 💪', liked: false }
+            ];
+            
+            function renderTimeline() {
+                let timelineHtml = '';
+                timelinePosts.forEach((post, index) => {
+                    timelineHtml += `
+                        <div class="col-md-4 mb-3">
+                            <div class="card">
+                                <img src="${post.img}" class="card-img-top" alt="Publicación">
+                                <div class="card-body">
+                                    <h6>${post.name} <small class="text-muted">${post.username}</small></h6>
+                                    <p class="card-text">${post.caption}</p>
+                                    <button class="btn btn-outline-danger btn-sm like-btn" data-index="${index}">
+                                        ${post.liked ? '❤️' : '🤍'} ${post.likes}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                $('#timeline-container').html(timelineHtml);
+            }
+            
+            $(document).on('click', '.like-btn', function() {
+                let index = $(this).data('index');
+                if (timelinePosts[index].liked) {
+                    timelinePosts[index].likes--;
+                } else {
+                    timelinePosts[index].likes++;
+                }
+                timelinePosts[index].liked = !timelinePosts[index].liked;
+                renderTimeline();
+            });
+            
+            renderTimeline();
+        });
+    </script>
+</body>
+</html>

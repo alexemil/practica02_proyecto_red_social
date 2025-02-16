@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Red Social</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">RedSocial</a>
+        </div>
+    </nav>
+
+    <!-- Registro Form -->
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <div class="card p-4 shadow" style="width: 400px;">
+            <h2 class="text-center">Registro</h2>
+            <form id="registerForm">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Usuario *</label>
+                    <input type="text" class="form-control" id="username" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Correo Electrónico *</label>
+                    <input type="email" class="form-control" id="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña *</label>
+                    <input type="password" class="form-control" id="password" required>
+                </div>
+                <div class="mb-3">
+                    <label for="confirmPassword" class="form-label">Confirmar Contraseña *</label>
+                    <input type="password" class="form-control" id="confirmPassword" required>
+                </div>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nombre *</label>
+                    <input type="text" class="form-control" id="name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="birthdate" class="form-label">Fecha de Nacimiento *</label>
+                    <input type="date" class="form-control" id="birthdate" required>
+                </div>
+                <div class="mb-3">
+                    <label for="gender" class="form-label">Género *</label>
+                    <select class="form-select" id="gender" required>
+                        <option value="">Seleccione</option>
+                        <option value="Hombre">Hombre</option>
+                        <option value="Mujer">Mujer</option>
+                        <option value="No Aplica">No Aplica</option>
+                        <option value="Prefiero no decirlo">Prefiero no decirlo</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                    <input type="text" class="form-control mt-2" id="otherGender" placeholder="Especifique su género" style="display: none;">
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Registrarse</button>
+            </form>
+            <div class="mt-3 text-center">
+                <a href="login.html">¿Ya tienes una cuenta? Inicia sesión</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script de Validación -->
+    <script>
+        $(document).ready(function() {
+            $('#gender').change(function() {
+                if ($(this).val() === 'Otro') {
+                    $('#otherGender').show();
+                } else {
+                    $('#otherGender').hide();
+                }
+            });
+
+            $('#registerForm').submit(function(event) {
+                event.preventDefault(); // Evita que el formulario se envíe automáticamente
+                let username = $('#username').val().trim();
+                let email = $('#email').val().trim();
+                let password = $('#password').val().trim();
+                let confirmPassword = $('#confirmPassword').val().trim();
+                let birthdate = $('#birthdate').val();
+                let gender = $('#gender').val();
+                let today = new Date();
+                let birthDate = new Date(birthdate);
+                let age = today.getFullYear() - birthDate.getFullYear();
+                let monthDiff = today.getMonth() - birthDate.getMonth();
+                if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                    age--;
+                }
+
+                if (!username || !email || !password || !confirmPassword || !birthdate || !gender) {
+                    alert('Por favor, complete todos los campos obligatorios.');
+                    return;
+                }
+                if (!email.includes('@') || !email.includes('.')) {
+                    alert('Ingrese un correo electrónico válido.');
+                    return;
+                }
+                if (password !== confirmPassword) {
+                    alert('Las contraseñas no coinciden.');
+                    return;
+                }
+                if (age < 18) {
+                    alert('Debes tener al menos 18 años para registrarte.');
+                    return;
+                }
+                alert('Registro exitoso. Redirigiendo al login...');
+                window.location.href = 'login.html';
+            });
+        });
+    </script>
+</body>
+</html>
