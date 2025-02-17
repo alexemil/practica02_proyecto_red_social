@@ -61,13 +61,20 @@
 
                 // Verificar si el usuario existe en localStorage
                 let user = JSON.parse(localStorage.getItem(username));
-                if (user && user.password === password) {
-                    alert('Login exitoso. Redirigiendo al timeline...');
-                    localStorage.setItem('loggedInUser', username); // Guarda el usuario logueado
-                    window.location.href = 'timeline.html';
-                } else {
-                    alert('Usuario o contraseña incorrectos.');
+                if (!user) {
+                    alert('El usuario no existe. Por favor, regístrate.');
+                    return;
                 }
+
+                if (user.password !== password) {
+                    alert('Contraseña incorrecta.');
+                    return;
+                }
+
+                // Login exitoso
+                alert('Login exitoso. Redirigiendo al timeline...');
+                localStorage.setItem('loggedInUser', username); // Guarda el usuario logueado
+                window.location.href = 'timeline.html';
             });
         });
     </script>
